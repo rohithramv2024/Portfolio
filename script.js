@@ -1,67 +1,138 @@
-/* Personal Portfolio | script.js | Project V1.3 | See DOCUMENTATION.docx */
+/* Personal Portfolio | script.js | Project V1.4 | See DOCUMENTATION.docx */
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  /* ── 1. ON LOAD ANIMATION ────────────────────────────────── */
-  /* Transition lives in CSS on the element itself.
-     Double requestAnimationFrame guarantees the browser has
-     fully painted .hidden before we swap to .visible. */
+      /* TYPING ANIMATION */
+      var heroName  = document.getElementById('hero-name');
+      var fullName  = 'Rohith Ram V';
+      var typeIndex = 0;
+      var cursorOn  = true;
 
-  var heroElements = [
-    document.getElementById('hero-greeting'),
-    document.getElementById('hero-name'),
-    document.getElementById('hero-title'),
-    document.getElementById('hero-tagline'),
-    document.getElementById('hero-cta')
-  ];
+      setInterval(function() {
+        if (typeIndex >= fullName.length) {
+          cursorOn = !cursorOn;
+          heroName.textContent = fullName + (cursorOn ? '|' : '');
+        }
+      }, 500);
 
-  for (var i = 0; i < heroElements.length; i++) {
-    if (heroElements[i]) {
-      heroElements[i].classList.add('hidden');
-    }
-  }
-
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() {
-      for (var i = 0; i < heroElements.length; i++) {
-        (function(el, delay) {
-          if (!el) return;
-          setTimeout(function() {
-            el.classList.remove('hidden');
-            el.classList.add('visible');
-          }, delay);
-        })(heroElements[i], i * 200);
-      }
-    });
-  });
-
-
-  /* ── 2. ACTIVE NAV HIGHLIGHTING ──────────────────────────── */
-  var sections = document.querySelectorAll('section');
-  var navLinks = document.querySelectorAll('#main-nav a');
-
-  function highlightNav() {
-    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-    for (var i = 0; i < sections.length; i++) {
-      var section = sections[i];
-      var sectionTop = section.offsetTop - 80;
-      var sectionBottom = sectionTop + section.offsetHeight;
-
-      if (scrollY >= sectionTop && scrollY < sectionBottom) {
-        var id = section.getAttribute('id');
-
-        for (var j = 0; j < navLinks.length; j++) {
-          navLinks[j].classList.remove('active');
-          if (navLinks[j].getAttribute('href') === '#' + id) {
-            navLinks[j].classList.add('active');
-          }
+      function typeName() {
+        heroName.textContent = fullName.slice(0, typeIndex) + '|';
+        typeIndex++;
+        if (typeIndex <= fullName.length) {
+          setTimeout(typeName, 90);
         }
       }
-    }
-  }
 
-  window.addEventListener('scroll', highlightNav);
-  highlightNav();
+      /* HERO LOAD ANIMATIONS */
+      var els = [
+        document.getElementById('hero-badge'),
+        document.getElementById('hero-greeting'),
+        document.getElementById('hero-title'),
+        document.getElementById('hero-tagline'),
+        document.getElementById('hero-stats'),
+        document.getElementById('hero-cta'),
+        null // hero-right removed
+      ];
 
-});
+      els.forEach(function(el) { if (el) el.classList.add('hidden'); });
+
+      setTimeout(function() { show(els[0]); }, 100);
+      setTimeout(function() { show(els[1]); }, 300);
+      setTimeout(typeName, 500);
+
+      var after = 500 + fullName.length * 90 + 200;
+      setTimeout(function() { show(els[2]); }, after);
+      setTimeout(function() { show(els[3]); }, after + 180);
+      setTimeout(function() { show(els[4]); }, after + 360);
+      setTimeout(function() { show(els[5]); }, after + 540);
+      setTimeout(function() { show(els[6]); }, after + 700);
+
+      function show(el) {
+        if (!el) return;
+        el.classList.remove('hidden');
+        el.classList.add('visible');
+      }
+
+      /* SKILL BARS */
+      setTimeout(function() {
+        document.querySelectorAll('.skill-fill').forEach(function(fill) {
+          fill.style.width = fill.getAttribute('data-width') + '%';
+        });
+      }, 800);
+
+      /* HAMBURGER */
+      var hbg = document.getElementById('hamburger');
+      var nav = document.getElementById('nav-links');
+      if (hbg) {
+        hbg.addEventListener('click', function() {
+          hbg.classList.toggle('open');
+          nav.classList.toggle('open');
+        });
+      }
+      document.querySelectorAll('#nav-links a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hbg.classList.remove('open');
+          nav.classList.remove('open');
+        });
+      });
+
+      /* NAV HIGHLIGHT */
+      var sections   = document.querySelectorAll('section');
+      var navAnchors = document.querySelectorAll('#nav-links a');
+
+      function highlightNav() {
+        var scrollY = window.pageYOffset;
+        sections.forEach(function(s) {
+          var top = s.offsetTop - 90;
+          if (scrollY >= top && scrollY < top + s.offsetHeight) {
+            var id = s.getAttribute('id');
+            navAnchors.forEach(function(a) {
+              a.classList.remove('active');
+              if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+            });
+          }
+        });
+      }
+      window.addEventListener('scroll', highlightNav);
+      highlightNav();
+
+      /* NAV CLICK FLASH */
+      navAnchors.forEach(function(a) {
+        a.addEventListener('click', function() {
+          var t = document.getElementById(this.getAttribute('href').replace('#',''));
+          if (!t) return;
+          setTimeout(function() {
+            t.classList.add('section-flash');
+            setTimeout(function() { t.classList.remove('section-flash'); }, 600);
+          }, 400);
+        });
+      });
+
+      /* FORM VALIDATION */
+      var form = document.getElementById('contact-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var n = document.getElementById('f-name');
+          var em = document.getElementById('f-email');
+          var q = document.getElementById('f-query');
+          var en = document.getElementById('err-name');
+          var ee = document.getElementById('err-email');
+          var eq = document.getElementById('err-query');
+          var ok = true;
+          [n,em,q].forEach(function(el){ el.classList.remove('error'); });
+          [en,ee,eq].forEach(function(el){ el.textContent=''; });
+          document.getElementById('form-success').textContent = '';
+          if (!n.value.trim()) { en.textContent='Name is required.'; n.classList.add('error'); ok=false; }
+          if (!em.value.trim()) { ee.textContent='Email is required.'; em.classList.add('error'); ok=false; }
+          else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) { ee.textContent='Enter a valid email.'; em.classList.add('error'); ok=false; }
+          if (!q.value.trim()) { eq.textContent='Please enter a query.'; q.classList.add('error'); ok=false; }
+          if (ok) {
+            window.location.href = 'mailto:rohithramv@gmail.com?subject='+encodeURIComponent(q.value.trim())+'&body='+encodeURIComponent('From: '+n.value.trim()+'\n\n'+q.value.trim());
+            document.getElementById('form-success').textContent = 'Opening your email client...';
+            form.reset();
+          }
+        });
+      }
+
+    });
