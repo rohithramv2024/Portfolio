@@ -4,12 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal portfolio of Rohith Ram V — CS Engineering Student at VIT." />
+  <meta name="author" content="Rohith Ram V" />
   <link rel="icon" type="image/png" href="icon.png" />
   <title>Rohith Ram V | Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- HEADER -->
   <header id="site-header">
     <div id="logo"><span>Rohith Ram V</span></div>
     <nav id="main-nav">
@@ -28,6 +34,7 @@
     </nav>
   </header>
 
+  <!-- HERO -->
   <section id="hero">
     <div class="hero-bg"></div>
     <div class="hero-shapes">
@@ -42,7 +49,7 @@
         <p id="hero-greeting">Hi, I'm</p>
         <h1 id="hero-name"></h1>
         <h2 id="hero-title">CS Engineering Student</h2>
-        <p id="hero-tagline">I like things that work.</p>
+        <p id="hero-tagline">From circuits to code — I make it work.</p>
         <div id="hero-stats">
           <span>2+ Projects</span>
           <span class="stat-divider">|</span>
@@ -55,17 +62,28 @@
           <a href="#contact" id="btn-contact">Get in Touch</a>
         </div>
       </div>
-
     </div>
     <div id="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
   </section>
 
+  <!-- ABOUT -->
   <section id="about">
     <div class="container">
       <h2 class="section-title">About Me</h2>
       <div id="about-content">
         <div id="about-photo">
-          <img src="image.jpeg" alt="Rohith Ram V" width="160" height="160" />
+          <div class="card-stack">
+            <div class="stack-card sc4"></div>
+            <div class="stack-card sc3">
+              <img src="image3.jpeg" alt="Rohith Ram V" />
+            </div>
+            <div class="stack-card sc2">
+              <img src="image2.jpeg" alt="Rohith Ram V" />
+            </div>
+            <div class="stack-card sc1">
+              <img src="image.jpeg" alt="Rohith Ram V" />
+            </div>
+          </div>
         </div>
         <div id="about-text">
           <p>I'm a Computer Science Engineering student at Vellore Institute of Technology, expected to graduate in 2028. I have a strong foundation in programming with hands-on experience in both hardware and software projects.</p>
@@ -75,6 +93,7 @@
     </div>
   </section>
 
+  <!-- EDUCATION -->
   <section id="education">
     <div class="container">
       <h2 class="section-title">Education</h2>
@@ -96,6 +115,7 @@
     </div>
   </section>
 
+  <!-- SKILLS -->
   <section id="skills">
     <div class="container">
       <h2 class="section-title">Skills</h2>
@@ -104,7 +124,6 @@
           <h3>Languages</h3>
           <div class="skill-bar"><div class="skill-info"><span>Python</span><span>85%</span></div><div class="skill-track"><div class="skill-fill" data-width="85"></div></div></div>
           <div class="skill-bar"><div class="skill-info"><span>Java</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" data-width="75"></div></div></div>
-          <div class="skill-bar"><div class="skill-info"><span>JavaScript</span><span>60%</span></div><div class="skill-track"><div class="skill-fill" data-width="60"></div></div></div>
           <div class="skill-bar"><div class="skill-info"><span>C</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" data-width="75"></div></div></div>
           <div class="skill-bar"><div class="skill-info"><span>C++</span><span>75%</span></div><div class="skill-track"><div class="skill-fill" data-width="75"></div></div></div>
         </div>
@@ -117,19 +136,26 @@
         <div class="skills-category">
           <h3>Tools</h3>
           <ul>
-            <li>Git and GitHub</li><li>VS Code</li><li>Arduino IDE</li><li>GitHub Pages</li>
+            <li>Git and GitHub</li>
+            <li>VS Code</li>
+            <li>Arduino IDE</li>
           </ul>
         </div>
         <div class="skills-category">
           <h3>Domains</h3>
           <ul>
-            <li>Embedded Systems</li><li>Data Structures</li><li>Database Management</li><li>IoT and Hardware</li><li>Design Thinking</li>
+            <li>Embedded Systems</li>
+            <li>Data Structures</li>
+            <li>Database Management</li>
+            <li>IoT and Hardware</li>
+            <li>Design Thinking</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
       <h2 class="section-title">Projects</h2>
@@ -137,23 +163,30 @@
         <article class="project-card">
           <h3 class="project-title">Smart Walking Stick</h3>
           <p class="project-description">An Arduino Uno based assistive device for visually impaired individuals. Ultrasonic sensors detect obstacles in real-time and trigger haptic vibration alerts. Built through the CMR for Better Bangalore Design Thinking workshop in collaboration with NGO Diya Foundation.</p>
-          <div class="project-tech"><span>Arduino Uno</span><span>Python</span><span>MPMC</span><span>Embedded Systems</span></div>
+          <div class="project-tech">
+            <span>Arduino Uno</span><span>Python</span><span>MPMC</span><span>Embedded Systems</span>
+          </div>
         </article>
         <article class="project-card">
           <h3 class="project-title">Library Management System</h3>
           <p class="project-description">A desktop application that streamlines library operations including book issuance, returns, member record tracking, and automated fine calculation. Developed as a team project during Grade 11 and 12.</p>
-          <div class="project-tech"><span>Python</span><span>SQL</span><span>Database Management</span></div>
+          <div class="project-tech">
+            <span>Python</span><span>SQL</span><span>Database Management</span>
+          </div>
         </article>
         <article class="project-card">
           <h3 class="project-title">Healthcare Information Management System</h3>
           <p class="project-description">A multi-page web application with role-based access for Admin, Doctor, and Patient. The patient module supports appointment booking, cancellation, and localStorage persistence.</p>
-          <div class="project-tech"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>localStorage</span></div>
+          <div class="project-tech">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>localStorage</span>
+          </div>
           <a href="https://github.com/rohithramv2024/healthcare-information-management-system" target="_blank" class="project-link">View Project</a>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- CERTIFICATIONS -->
   <section id="certifications">
     <div class="container">
       <h2 class="section-title">Certifications</h2>
@@ -165,6 +198,7 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact">
     <div class="container">
       <h2 class="section-title no-prefix">Contact</h2>
@@ -198,6 +232,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer id="site-footer">
     <p>2026 Rohith Ram V. All rights reserved.</p>
   </footer>

@@ -136,3 +136,84 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
     });
+
+  /* ── TRAILING DOTS CURSOR ───────────────────────────────── */
+  var TRAIL_COUNT = 8;
+  var trailDots   = [];
+  var positions   = [];
+  var mouseX = 0, mouseY = 0;
+  var isHovering = false;
+
+  for (var i = 0; i < TRAIL_COUNT; i++) {
+    var d = document.createElement('div');
+    d.className = 'trail-dot';
+    var size = Math.round(10 - i * 0.9);
+    d.style.width   = size + 'px';
+    d.style.height  = size + 'px';
+    d.style.opacity = (1 - (i / TRAIL_COUNT) * 0.85);
+    d.style.transition = 'none';
+    document.body.appendChild(d);
+    trailDots.push(d);
+    positions.push({ x: 0, y: 0 });
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateTrail() {
+    positions[0].x = mouseX;
+    positions[0].y = mouseY;
+    for (var i = 1; i < TRAIL_COUNT; i++) {
+      positions[i].x += (positions[i - 1].x - positions[i].x) * 0.35;
+      positions[i].y += (positions[i - 1].y - positions[i].y) * 0.35;
+    }
+    for (var i = 0; i < TRAIL_COUNT; i++) {
+      trailDots[i].style.left = positions[i].x + 'px';
+      trailDots[i].style.top  = positions[i].y + 'px';
+      var s = isHovering ? Math.round(18 - i * 1.4) : Math.round(18 - i * 1.4);
+      trailDots[i].style.width  = s + 'px';
+      trailDots[i].style.height = s + 'px';
+      if (isHovering) {
+        trailDots[i].style.background = '#FFFFFF';
+      } else {
+        trailDots[i].style.background = '#58A6FF';
+      }
+    }
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
+
+  var hoverables = document.querySelectorAll('a, button, .project-card, .education-card, .skills-category, .cert-card, .card-stack');
+  hoverables.forEach(function(el) {
+    el.addEventListener('mouseenter', function() { isHovering = true; });
+    el.addEventListener('mouseleave', function() { isHovering = false; });
+  });
+
+
+  /* ── SCROLL-IN ANIMATIONS ────────────────────────────────── */
+  /* Uses IntersectionObserver to add in-view class when elements scroll into view */
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  var animatedEls = document.querySelectorAll(
+    '.section-title, .education-card, .project-card, .skills-category, .cert-card, #about-content, #contact-wrapper'
+  );
+  animatedEls.forEach(function(el) { observer.observe(el); });
+
+
+  /* ── HEADER SHADOW ON SCROLL ─────────────────────────────── */
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 10) {
+      document.getElementById('site-header').classList.add('scrolled');
+    } else {
+      document.getElementById('site-header').classList.remove('scrolled');
+    }
+  });
+
